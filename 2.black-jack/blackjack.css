@@ -11,3 +11,74 @@
 .legend>p{
   border: 2px solid;
 }
+
+.diamonds{
+  background-image: url("./img/SuitDiamonds.svg");
+  background-size: contain;
+  
+  background-repeat: no-repeat;
+  background-position-x: 10px;
+  
+  font-size: 26px;
+  font-weight: bold;
+  height: 60px;
+  width: 70px;
+  padding-left: 5px;
+
+  border: 2px solid black;
+  border-radius: 15%;
+}
+
+.hearts{
+  background-image: url("./img/Naipe_copas.png");
+  background-size: contain;
+  
+  background-repeat: no-repeat;
+  background-position-x: 15px;
+  
+  font-size: 26px;
+  font-weight: bold;
+  height: 60px;
+  width: 70px;
+  padding-left: 5px;
+
+  border: 2px solid black;
+  border-radius: 15%;
+
+  display: table-cell;
+  vertical-align: bottom;
+}
+
+.spades{
+  background-image: url("./img/SuitSpades.svg");
+  background-size: contain;
+  
+  background-repeat: no-repeat;
+  background-position-x: 10px;
+  
+  font-size: 26px;
+  font-weight: bold;
+  height: 60px;
+  width: 70px;
+  padding-left: 5px;
+
+  border: 2px solid black;
+  border-radius: 15%;
+}
+
+.clubs{
+  background-image: url("./img/SuitClubs.svg");
+  background-size: contain;
+  
+  background-repeat: no-repeat;
+  background-position-x: 10px;
+  
+  font-size: 26px;
+  font-weight: bold;
+  height: 60px;
+  width: 70px;
+  padding-left: 5px;
+
+  border: 2px solid black;
+  border-radius: 15%;
+}

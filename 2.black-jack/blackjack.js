@@ -146,9 +146,3 @@ stopBtn.addEventListener("click", () =>{
   dealerContinueOrNot()
 });
 
-
-
-
-//TODO: hide PC cards until player presses stop
-
-//TODO: Bust message for player and PC
