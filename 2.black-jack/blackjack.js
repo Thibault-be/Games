@@ -5,6 +5,10 @@ let cardsDeck = [
   ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "S12", "S13"]
 ];
 
+const drawCardBtn = document.querySelector(".player-draw");
+const stopBtn = document.querySelector(".player-stop");
+const playerCards = document.querySelector(".player-cards");
+const computerCards = document.querySelector(".computer-cards");
 
 function drawCard(howMany, array){
 
@@ -52,15 +56,26 @@ let dealerStartHand = []
 
 drawCard(2, playerStartHand);
 
-//drawCard(2, dealerStartHand);
+drawCard(2, dealerStartHand);
 
 let playerStartValue = determineValueHand(playerStartHand)
 
 
 
 
-const drawCardBtn = document.querySelector(".player-draw")
+
 drawCardBtn.addEventListener("click", () =>{
   let newCard = drawCard(1, playerStartHand)
   determineValueHand(newCard);
 })
+
+
+
+stopBtn.addEventListener("click", () =>{
+  drawCardBtn.setAttribute("disabled", "");
+});
+
+
+//TODO: hide PC cards until player presses stop
+
+//TODO: Bust message for player and PC
