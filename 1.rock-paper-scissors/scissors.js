@@ -13,14 +13,12 @@ choices.forEach(item =>{
 
 let playerChoices = document.querySelectorAll("button")
 
-
 playerChoices.forEach(choice =>{
   choice.addEventListener("click", (event) =>{
     let playerChoice = event.target.textContent
     playGame(playerChoice, computerChoice)
   });
 });
-
 
 function playGame(playerChoice, computerChoice){
   computerChoice = choices[computerChoice];
@@ -54,14 +52,9 @@ function playGame(playerChoice, computerChoice){
           alert(`Computer wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`)
         }
         break
-      }
-    }
-
-  }
-
-  
+      };
+    };
+  };
   location.reload()
-
-
-}
+};
 
