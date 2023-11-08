@@ -13,17 +13,20 @@ const dealerCards = document.querySelector(".dealer-cards");
 const dealerValueSpan = document.querySelector(".dealer-value");
 dealerValueSpan.setAttribute("style", "visibility: hidden")
 
+//let suitClass //variable to determine class of div which will be hearts, diamonds, spades or clubs
+
 function drawCard(howMany, array, user){
   for (let i = 0; i < howMany; i++){
     let suit = Math.floor(Math.random()*4+1)-1;
 
     if(cardsDeck[suit].length === 0){ //if no cards left in 'suit pile' we cannot draw a card from this suit and must try again
-      drawCard(1)
+      drawCard(1, array, user)
     }else{
       let cardsLeft = cardsDeck[suit].length;
       let number = Math.floor(Math.random()*cardsLeft +1)-1;
   
       let drawnCard = cardsDeck[suit][number];
+
 
       //add drawnCard to hand
       array.push(drawnCard)
@@ -31,9 +34,12 @@ function drawCard(howMany, array, user){
       //remove hand from deck
       cardsDeck[suit].splice(number,1)
 
+      
+
       //Add hand to HTML
       let cardHTMLElement = document.createElement("div");
-      cardHTMLElement.textContent = drawnCard;
+      //cardHTMLElement.textContent = drawnCard;
+      setSuit(cardHTMLElement, drawnCard);
       if(user ==="player"){
         playerCards.appendChild(cardHTMLElement);
       }else{
@@ -46,6 +52,57 @@ function drawCard(howMany, array, user){
   };
   return array
 };
+
+function setSuit(cardHTMLElement, drawnCard){
+  suitClass= Array.from(drawnCard);
+  let cardText = suitClass.slice(1,).join("");
+  suitClass= suitClass[0];
+  console.log(suitClass);
+
+  switch (suitClass){
+    case "H": {
+      cardHTMLElement.setAttribute("class", "hearts");
+      break
+    }
+    case "D":{
+      cardHTMLElement.setAttribute("class", "diamonds");
+      break
+    }
+    case "S":{
+      cardHTMLElement.setAttribute("class", "spades");
+      break
+    }
+    case "C":{
+      cardHTMLElement.setAttribute("class", "clubs");
+      break
+    }
+  }
+
+  switch(cardText){
+    case "1":{
+      cardHTMLElement.textContent = "A"
+      break;
+    }
+    case "11":{
+      cardHTMLElement.textContent = "J"
+      break;
+    }
+    case "12":{
+      cardHTMLElement.textContent = "Q"
+      break;
+    }
+    case "13":{
+      cardHTMLElement.textContent = "K"
+      break;
+    }
+    default: cardHTMLElement.textContent = cardText
+  }
+
+  // console.log("cardText",cardText)
+  // cardHTMLElement.textContent = cardText;
+  
+
+ }
 
 function determineValueHand(array, user){
   let handValue = 0;
