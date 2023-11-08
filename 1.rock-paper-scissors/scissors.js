@@ -1,8 +1,6 @@
 let choices = ["rock", "paper", "scissors"];
 const mainElement = document.querySelector("main");
 
-let computerChoice = Math.floor(Math.random() * 2 +1)
-
 choices.forEach(item =>{
   newBtn = document.createElement("button");
   newBtn.textContent = item;
@@ -11,50 +9,89 @@ choices.forEach(item =>{
   mainElement.appendChild(newBtn);
 });
 
-let playerChoices = document.querySelectorAll("button")
+let numberOfPlayerWinsElement = document.querySelector(".player");
+//console.log(numberOfPlayerWinsElement)
+let numberOfComputerWinsElement = document.querySelector(".computer")
+//console.log(numberOfComputerWinsElement)
+let numberOfTiesElement= document.querySelector(".tie");
+//console.log(numberOfTiesElement)
 
+let outcome;
+let outcomeDiv;
+
+let playerChoices = document.querySelectorAll("button")
 playerChoices.forEach(choice =>{
   choice.addEventListener("click", (event) =>{
     let playerChoice = event.target.textContent
-    playGame(playerChoice, computerChoice)
+    outcomeDiv = addNewDiv()
+    playGame(playerChoice)
   });
 });
 
-function playGame(playerChoice, computerChoice){
+function addNewDiv(){
+  let OutcomeElement = document.createElement("div")
+  return OutcomeElement;
+}
+
+function playGame(playerChoice){
+  let computerChoice = (Math.floor(Math.random() * 3) +1)-1
   computerChoice = choices[computerChoice];
-  console.log(playerChoice, computerChoice)
+
+  let numberOfPlayerWins = Number(numberOfPlayerWinsElement.textContent);
+  console.log("player", numberOfPlayerWins)
+  let numberOfComputerWins = Number(numberOfComputerWinsElement.textContent);
+  console.log("computer", numberOfComputerWins);
+  let numberOfTies = Number(numberOfTiesElement.textContent);
+  console.log("ties", numberOfTies);
 
   if(playerChoice === computerChoice){
-    alert(`It's a tie. Player picked ${playerChoice}. Computer picked ${computerChoice}`)
+    outcome =`It's a tie. Player picked ${playerChoice}. Computer picked ${computerChoice}`
+    numberOfTies += 1;
+    numberOfTiesElement.textContent = numberOfTies;
   }else{
     switch (playerChoice){
       case "rock":{
         if (computerChoice === "scissors"){
-          alert(`Player wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`)
+          outcome =`Player wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`
+          numberOfPlayerWins += 1
+          numberOfPlayerWinsElement.textContent = numberOfPlayerWins
+
         }else {
-          alert(`Computer wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`)
+          outcome =`Computer wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`
+          numberOfComputerWins += 1;
+          numberOfComputerWinsElement.textContent = numberOfComputerWins;
         }
         break
       };
       case "paper":{
         if(computerChoice === "rock"){
-          alert(`Player wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`)
+          outcome = `Player wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`
+          numberOfPlayerWins += 1
+          numberOfPlayerWinsElement.textContent = numberOfPlayerWins
         }else {
-          alert(`Computer wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`)
+          outcome =`Computer wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`
+          numberOfComputerWins += 1;
+          numberOfComputerWinsElement.textContent = numberOfComputerWins;
         }
         break
 
       }; 
       case "scissors":{
         if(computerChoice === "paper"){
-          alert(`Player wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`)
+          outcome = `Player wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`
+          numberOfPlayerWins += 1
+          numberOfPlayerWinsElement.textContent = numberOfPlayerWins
         }else {
-          alert(`Computer wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`)
+          outcome =`Computer wins. Player picked ${playerChoice}. Computer picked ${computerChoice}`
+          numberOfComputerWins += 1;
+          numberOfComputerWinsElement.textContent = numberOfComputerWins;
         }
         break
       };
     };
   };
-  location.reload()
+  outcomeDiv.textContent = outcome;
+  mainElement.appendChild(outcomeDiv);
+  //location.reload()
 };
 
