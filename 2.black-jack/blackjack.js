@@ -8,10 +8,10 @@ let cardsDeck = [
 const drawCardBtn = document.querySelector(".player-draw");
 const stopBtn = document.querySelector(".player-stop");
 const playerCards = document.querySelector(".player-cards");
-const playerValue = document.querySelector(".player-value")
+const playerValueSpan = document.querySelector(".player-value")
 const dealerCards = document.querySelector(".dealer-cards");
-const dealerValue = document.querySelector(".dealer-value");
-dealerValue.setAttribute("style", "visibility: hidden")
+const dealerValueSpan = document.querySelector(".dealer-value");
+dealerValueSpan.setAttribute("style", "visibility: hidden")
 
 function drawCard(howMany, array, user){
   for (let i = 0; i < howMany; i++){
@@ -37,15 +37,15 @@ function drawCard(howMany, array, user){
       if(user ==="player"){
         playerCards.appendChild(cardHTMLElement);
       }else{
-        cardHTMLElement.setAttribute("style", "visibility: hidden")
+        if(dealerCards.children.length === 0){
+          cardHTMLElement.setAttribute("style", "visibility: hidden")
+        };
         dealerCards.appendChild(cardHTMLElement);
       };
     };
   };
-  
   return array
 };
-
 
 function determineValueHand(array, user){
   let handValue = 0;
@@ -59,18 +59,63 @@ function determineValueHand(array, user){
     };
     handValue += cardValue
   };
-  if(handValue > 21){
+  if(user === "player" && handValue > 21){
     alert("Bust! More than 21! dealer's turn")
     drawCardBtn.setAttribute("disabled", "");
     stopBtn.setAttribute("disabled", "");
+    dealerValueSpan.setAttribute("style", "visibilty: visible");
+    let dealerChildren = Array.from(dealerCards.children)
+    dealerChildren.forEach(child =>{
+      child.setAttribute("style", "visibilty: visible")
+    });
+    playerValueSpan.textContent = handValue;
+    dealerContinueOrNot();
+    return
   }
   if(user === "player"){
-    playerValue.textContent = handValue;
+    playerValueSpan.textContent = handValue;
   }else{
-    dealerValue.textContent = handValue;
-  }
+    dealerValueSpan.textContent = handValue;
+  };
   return handValue;
 };
+
+let dealerHandArray
+function dealerContinueOrNot(){
+  let playerValue = Number(playerValueSpan.textContent);
+  let dealerValue= Number(dealerValueSpan.textContent);  
+
+
+  switch(playerValue > 21){
+    case true:{
+      if (dealerValue <=16){
+        dealerHandArray = drawCard(1, dealerHand, "dealer");
+        determineValueHand(dealerHandArray, "dealer");
+        dealerContinueOrNot();
+      }else if(dealerValue > 21){
+        alert("it's a tie");
+      }else if (dealerValue > 16){
+        alert("dealer wins");
+      }
+      break
+    }
+    case false:{
+      if(dealerValue <=16){
+        dealerHandArray = drawCard(1, dealerHand, "dealer");
+        determineValueHand(dealerHandArray, "dealer");
+        dealerContinueOrNot();
+      }if(dealerValue === playerValue){
+        alert("it's a tie")
+      }else if(dealerValue > playerValue && dealerValue <= 21){
+        alert("dealer wins");
+      }else{
+        alert("player wins")
+      }
+      break;
+    };
+  };
+};
+
 
 let playerHand = []
 let dealerHand = []
@@ -78,10 +123,8 @@ let dealerHand = []
 drawCard(2, playerHand, "player");
 drawCard(2, dealerHand, "dealer");
 
-
 determineValueHand(playerHand, "player")
 determineValueHand(dealerHand, "dealer")
-
 
 drawCardBtn.addEventListener("click", () =>{
   let newCard = drawCard(1, playerHand, "player")
@@ -90,16 +133,20 @@ drawCardBtn.addEventListener("click", () =>{
 
 
 stopBtn.addEventListener("click", () =>{
+  stopBtn.setAttribute("disabled","");
   drawCardBtn.setAttribute("disabled", "");
 
-  dealerValue.setAttribute("style", "visibilty: visible");
+  dealerValueSpan.setAttribute("style", "visibilty: visible");
 
   let dealerChildren = Array.from(dealerCards.children)
   dealerChildren.forEach(child =>{
     child.setAttribute("style", "visibilty: visible")
-  }) 
-    
+  });
+
+  dealerContinueOrNot()
 });
+
+
 
 
 //TODO: hide PC cards until player presses stop

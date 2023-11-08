@@ -10,18 +10,56 @@
 <body>
   <main>
 
-    <h1>Black Jack</h1>
+    <div class="legend">
+      <p>C9 = 9 of clubs</p>
+      <p>H13 = King of hearts</p>
+      <p>D1 = Ace of diamonds</p>
+      <p>S11 = Jack of spades</p>
+    </div>
 
-    <h2 class="player-cards">Player Cards</h2>
-    <h3>Player value: <span class="player-value"></span></h3>
-    <h2 class= "dealer-cards" >Dealer Cards</h2>
-    <h3>Dealer value: <span class="dealer-value"></span></h3>
+    <div class="container">
+
+      <div class="left">
+        <h3>Features</h3>
+        <h4>
+          <ul>
+            <li>gives player and dealer two cards each</li>
+            <li>one card is face down for dealer</li>
+            <li>cards are removed from deck. You should not see same card appear twice</li>
+            <li>The dealer gets their turn once player goes over 21 or clicks stop</li>
+          </ul>
+        </h4>
+      </div>
+      <div class="right">
+        <h3>Things to implement still</h3>
+        <h4>
+          <ul>
+            <li>Ace should be either 1 or 11</li>
+            <li>Betting system</li>
+            <li>make elements appear before alert box</li>
+            <li>type of "new game" mechanic</li>
+            <li>Make it <strong>even better</strong> looking</li>
+          </ul>
+        </h4>
+      </div>
+    </div>
+
+    <h2>Black Jack</h2>
+
+    <h3 class="player-cards">Player Cards</h3>
+    <h4>Player value: <span class="player-value"></span></h4>
+    <h3 class= "dealer-cards" >Dealer Cards</h3>
+    <h4>Dealer value: <span class="dealer-value"></span></h4>
     
 
 
     <button class="player-draw">Draw Card</button>
     <button class="player-stop">Stop</button>
   </main>
+
+
+
+
   
 </body>
 </html>

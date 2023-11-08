@@ -1,0 +1,13 @@
+.container{
+  display: flex;
+  justify-content: space-around;
+}
+
+.legend{
+  display: flex;
+  gap: 50px;
+}
+
+.legend>p{
+  border: 2px solid;
+}
