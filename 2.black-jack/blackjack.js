@@ -237,6 +237,7 @@ stopBtn.addEventListener("click", () =>{
 
 function gameEnded(winner){
   let endOfRound = document.createElement("div")
+  endOfRound.setAttribute("class", "winner")
   endOfRound.textContent = winner;
   mainElement.appendChild(endOfRound);
 

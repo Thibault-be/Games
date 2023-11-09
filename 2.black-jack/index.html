@@ -10,27 +10,30 @@
 <body>
   <main>
 
-    <h2>Black Jack</h2>
+    <h2 class="title">Blackjack</h2>
     
+
+    <div class="overall-container">
       <div class="player-cards-container">
         <div class="player-title">
           <h3>Player Cards</h3>
         </div>
         <div class="player-cards"></div>
+        <h4 class="value-label">Player value: <span class="player-value"></span></h4>
+      </div>
+      
+      
+      <div class="dealer-cards-container">
+        <div class="dealer-title">
+          <h3>Dealer Cards</h3>
+        </div>
+        <div class="dealer-cards"></div>
+        <h4 class="value-label">Dealer value: <span class="dealer-value"></span></h4>
       </div>
     </div>
-    <h4>Player value: <span class="player-value"></span></h4>
+  
 
-
-    <div class="dealer-cards-container">
-      <div class="dealer-title">
-        <h3>Dealer Cards</h3>
-      </div>
-      <div class="dealer-cards"></div>
-    </div>
-  </div>
-
-    <h4>Dealer value: <span class="dealer-value"></span></h4>
+    
     
 
     <button class="player-draw">Draw Card</button>

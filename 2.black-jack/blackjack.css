@@ -1,6 +1,29 @@
-.container{
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background-image: url("./img/background.jpg");
+  background-size: cover;
+}
+
+main{
+  /* border: 3px solid green; */
+  height: 100%;
+  width: 100%;
+}
+
+.title{
+  color: antiquewhite;
+  font-size: 50px;
+  padding: 20px
+}
+
+
+.overall-container{
   display: flex;
-  justify-content: space-around;
+  flex-direction: column-reverse;
 }
 
 .legend{
@@ -27,6 +50,8 @@
 
   border: 2px solid black;
   border-radius: 15%;
+
+  background-color: antiquewhite;
 }
 
 .hearts{
@@ -47,6 +72,7 @@
 
   display: table-cell;
   vertical-align: bottom;
+  background-color: antiquewhite;
 }
 
 .spades{
@@ -64,6 +90,7 @@
 
   border: 2px solid black;
   border-radius: 15%;
+  background-color: antiquewhite;
 }
 
 .clubs{
@@ -81,17 +108,79 @@
 
   border: 2px solid black;
   border-radius: 15%;
+  background-color: antiquewhite;
+}
+
+
+h3{
+  font-size: 32px;
+  font-weight: bold;
+}
+
+
+.player-title>h3{
+  color:antiquewhite;
+  padding-top: 35px;
+  padding-left: 300px;
+  padding-bottom: 10px;
 }
 
 .player-cards{
   display: flex;
   gap: 10px;
+  padding-left: 300px;
+
   /* border: 2px solid blue; */
+}
+
+.dealer-title{
+  color: antiquewhite;
+  padding-top: 50px;
+  padding-left: 300px;
+}
+
+.value-label{
+  padding-top: 10px;
+  font-size: 24px;
 }
 
 
 .dealer-cards{
+  padding-left: 300px;
   display: flex;
   gap: 10px;
   /* border: 2px solid blue; */
 }
+
+h4{
+  color:antiquewhite;
+  padding-left: 300px;
+}
+
+.player-draw, .new-game{
+  margin-left: 300px;
+  margin-top: 20px;
+}
+
+.new-game{
+  margin-top: -70px;
+}
+
+.winner{
+  color: antiquewhite;
+  margin-left: 800px;
+  font-size: 50px;
+}
+
+button{
+  padding: 10px;
+  background-color: antiquewhite;
+  color: brown;
+  border-radius: 15%
+}
+
+button:hover{
+  font-weight: bold;
+  cursor: pointer;
+}
+
