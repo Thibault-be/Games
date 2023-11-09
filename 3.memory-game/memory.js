@@ -6,6 +6,7 @@ const mainElement = document.querySelector("main");
 
 let bothCards = []   //compare both cards
 let firstOrSecondTurnedCard = 0
+let counter = 0
 
 const shuffleArray = (array) =>{
   let currentIndex = array.length, randomIndex;
@@ -41,6 +42,20 @@ const compareCards = (bothCards) =>{
   if (classOne === classTwo){
     firstOrSecondTurnedCard = 0;
     bothCards = [];
+
+    counter++
+    if(counter === cards.length){
+      let newDiv = document.createElement("div")
+      newDiv.textContent = "Congratulations"
+      mainElement.appendChild(newDiv)
+
+      let playAgainBtn = document.createElement("button")
+      playAgainBtn.textContent = "Play again"
+      mainElement.appendChild(playAgainBtn)
+      playAgainBtn.addEventListener("click", () =>{
+        location.reload();
+      })
+    }
     
   }else{ 
     bothCards.forEach(card =>{
