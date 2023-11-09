@@ -28,7 +28,6 @@ function drawCard(howMany, array, user){
   
       let drawnCard = cardsDeck[suit][number];
 
-
       //add drawnCard to hand
       array.push(drawnCard)
 
@@ -97,7 +96,7 @@ function setSuit(cardHTMLElement, drawnCard){
   }
 
 
- }
+};
 
  function determineValueHand(array, user){
 
@@ -176,7 +175,6 @@ function setSuit(cardHTMLElement, drawnCard){
   return handValue;
 };
 
-
 let dealerHandArray
 function dealerContinueOrNot(){
   let playerValue = Number(playerValueSpan.textContent);
@@ -248,14 +246,11 @@ function gameEnded(winner){
   mainElement.appendChild(newGameBtn);
   playAgain(newGameBtn)
 
-}
+};
 
 function playAgain(btn){
   console.log("here");
   btn.addEventListener("click", ()=>{
     location.reload()
   })
-}
-
-// hide dealer value with width
-// make red not visible
+};
