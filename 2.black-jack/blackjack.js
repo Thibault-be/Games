@@ -5,14 +5,14 @@ let cardsDeck = [
   ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S11", "S12", "S13"]
 ];
 
+const mainElement = document.querySelector("main");
 const drawCardBtn = document.querySelector(".player-draw");
 const stopBtn = document.querySelector(".player-stop");
 const playerCards = document.querySelector(".player-cards");
 const playerValueSpan = document.querySelector(".player-value")
 const dealerCards = document.querySelector(".dealer-cards");
 const dealerValueSpan = document.querySelector(".dealer-value");
-//dealerValueSpan.setAttribute("style", "visibility: hidden")
-dealerValueSpan.setAttribute("style", "background-color: white")
+dealerValueSpan.setAttribute("style", "visibility: hidden")
 
 let suitClass //variable to determine class of div which will be hearts, diamonds, spades or clubs
 
@@ -28,6 +28,7 @@ function drawCard(howMany, array, user){
   
       let drawnCard = cardsDeck[suit][number];
 
+
       //add drawnCard to hand
       array.push(drawnCard)
 
@@ -42,8 +43,7 @@ function drawCard(howMany, array, user){
         playerCards.appendChild(cardHTMLElement);
       }else{
         if(dealerCards.children.length === 0){
-          //cardHTMLElement.setAttribute("style", "visibility: hidden")
-          cardHTMLElement.setAttribute("style", "background-color: white")
+          cardHTMLElement.setAttribute("style", "visibility: hidden")
         };
         dealerCards.appendChild(cardHTMLElement);
       };
@@ -96,31 +96,67 @@ function setSuit(cardHTMLElement, drawnCard){
     default: cardHTMLElement.textContent = cardText
   }
 
-  // console.log("cardText",cardText)
-  // cardHTMLElement.textContent = cardText;
-  
 
  }
 
  function determineValueHand(array, user){
+
   let handValue = 0;
   let handArray = [];
+  let cardValue;
   for (let i = 0; i < array.length; i++){
-    let cardValue = Array.from(array[i]);
+    cardValue = Array.from(array[i]);
 
     cardValue = Number(cardValue.slice(1,).join(""));
     
     if(cardValue > 10){
       cardValue = 10;
     };
-    console.log(typeof(cardValue))
-    handArray.push(cardValue);
-    handArray.sort();
-    console.log("handArray", handArray)
-    handValue += cardValue
+    handArray.push(cardValue); 
   };
+    handArray.sort();
+
+
+    //account for ace
+
+
+    let aceCounter = 0
+    handArray.forEach(card =>{
+      if(card == 1){
+        aceCounter += 1
+      }
+    })
+
+    switch (aceCounter){
+      case 0:
+      case 1:{
+        for (let i = handArray.length - 1; i >= 0; i--){
+          cardValue = handArray[i]
+          if (handArray[i] === 1){
+            if (handValue + 11 <= 21){
+              cardValue = 11;
+            }else{
+              cardValue = 1;
+            }
+          };
+          handValue += cardValue
+        };
+        break;
+      };
+      case 2:
+      case 3:
+      case 4:{
+        for (let i = handArray.length - 1; i>=0; i--){
+          cardValue = handArray[i];
+          handValue += cardValue
+          if(handValue +10 <= 21){
+            handValue += 10
+          }
+        }
+      }  
+    };
+
   if(user === "player" && handValue > 21){
-    alert("Bust! More than 21! dealer's turn")
     drawCardBtn.setAttribute("disabled", "");
     stopBtn.setAttribute("disabled", "");
     dealerValueSpan.setAttribute("style", "visibilty: visible");
@@ -140,80 +176,36 @@ function setSuit(cardHTMLElement, drawnCard){
   return handValue;
 };
 
-// function determineValueHand(array, user){
-//   let handValue = 0;
-//   array.sort()
-//   console.log(array)
-//   for (let i = 0; i < array.length; i++){
-//     let cardValue = Array.from(array[i]);
-//     console.log(cardValue)
-
-//     cardValue = Number(cardValue.slice(1,).join(""));
-
-//     if(cardValue > 10){
-//       cardValue = 10;
-//     };
-//     handValue += cardValue
-//   };
-//   if(user === "player" && handValue > 21){
-//     alert("Bust! More than 21! dealer's turn")
-//     drawCardBtn.setAttribute("disabled", "");
-//     stopBtn.setAttribute("disabled", "");
-//     dealerValueSpan.setAttribute("style", "visibilty: visible");
-//     let dealerChildren = Array.from(dealerCards.children)
-//     dealerChildren.forEach(child =>{
-//       child.setAttribute("style", "background-color: white")
-//     });
-//     playerValueSpan.textContent = handValue;
-//     dealerContinueOrNot();
-//     return
-//   }
-//   if(user === "player"){
-//     playerValueSpan.textContent = handValue;
-//   }else{
-//     dealerValueSpan.textContent = handValue;
-//   };
-//   return handValue;
-// };
 
 let dealerHandArray
 function dealerContinueOrNot(){
   let playerValue = Number(playerValueSpan.textContent);
   let dealerValue= Number(dealerValueSpan.textContent); 
-  console.log("i am back in dealerContinueOrNOt") 
-
 
   switch(playerValue > 21){
     case true:{    
-        alert("dealer wins");
+        gameEnded("dealer wins");
         break;
       };
     case false:{
       if(dealerValue <=16){
         dealerHandArray = drawCard(1, dealerHand, "dealer");
-        console.log("drawing new hand")
         determineValueHand(dealerHandArray, "dealer");
-        console.log("determine its value")
         dealerContinueOrNot();
         return
       }if(dealerValue === playerValue){
-        console.log("it's a tie")
-        alert("it's a tie")
+        gameEnded("it's a tie")
         return
       }else if(dealerValue > playerValue && dealerValue <= 21){
-        console.log("dealer wins")
-        alert("dealer wins");
+        gameEnded("dealer wins");
         return
       }else{
-        console.log("I am here")
-        alert("player wins")
+        gameEnded("player wins")
         return
       }
-      break;
     };
   };
 };
-
 
 let playerHand = []
 let dealerHand = []
@@ -227,7 +219,7 @@ determineValueHand(dealerHand, "dealer")
 drawCardBtn.addEventListener("click", () =>{
   let newCard = drawCard(1, playerHand, "player")
   determineValueHand(newCard, "player");
-})
+});
 
 
 stopBtn.addEventListener("click", () =>{
@@ -244,6 +236,26 @@ stopBtn.addEventListener("click", () =>{
   dealerContinueOrNot()
 });
 
+
+function gameEnded(winner){
+  let endOfRound = document.createElement("div")
+  endOfRound.textContent = winner;
+  mainElement.appendChild(endOfRound);
+
+  let newGameBtn = document.createElement("button")
+  newGameBtn.setAttribute("class", "new-game");
+  newGameBtn.textContent = "play again?"
+  mainElement.appendChild(newGameBtn);
+  playAgain(newGameBtn)
+
+}
+
+function playAgain(btn){
+  console.log("here");
+  btn.addEventListener("click", ()=>{
+    location.reload()
+  })
+}
 
 // hide dealer value with width
 // make red not visible
