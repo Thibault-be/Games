@@ -5,7 +5,8 @@ const body = document.querySelector("body");
 let header = document.querySelector("header");
 let main = document.querySelector("main");
 let playerPositionCoordinates = [];
-let playerPositionElement
+let adjacentTileCoordinates = [];
+let playerPositionElement;
 
 //skeleton elements
 let btnContainer = document.createElement("div");
@@ -72,7 +73,36 @@ const playerStartPosition = (size) =>{
   return playerPositionCoordinates;
 };
 
-drawGrid();
+const findPlayerPosition = () =>{
+  let playerElement = document.querySelector(".player");
+  let playerCol = Number(playerElement.classList[1].slice(-2,));
+  let playerRow = Number(playerElement.classList[2].slice(-2,));
+  playerPositionCoordinates = [playerCol, playerRow];
+
+  playerPositionCoordinates = [10,10]
+
+  return playerPositionCoordinates;
+};
+
+const findAdjacentTileCoordinates = (playerPositionCoordinates, direction) =>{
+
+  console.log("in find adj", playerPositionCoordinates)
+  let pRow = playerPositionCoordinates[1];
+  let pCol = playerPositionCoordinates[0];
+  console.log(direction)
+
+  switch(direction){
+    case "ArrowUp": adjacentTileCoordinates = [pCol, pRow-1]
+      break;
+    case "ArrowDown": adjacentTileCoordinates = [pCol, pRow+1]
+      break;
+    case "ArrowLeft": adjacentTileCoordinates = [pCol-1, pRow]
+      break;
+    case "ArrowRight": adjacentTileCoordinates = [pCol+1, pRow]
+      break;
+  };
+  console.log("adjcor",adjacentTileCoordinates)
+};
 
 function drawGrid(){
   playerPositionCoordinates = playerStartPosition(32);
@@ -93,25 +123,22 @@ function drawGrid(){
   };
 };
 
-body.addEventListener("keyup", (event) =>{
-  console.log(event.code)
-  
-  switch(event.code){
+drawGrid();
 
+body.addEventListener("keyup", (event) =>{
+  movePlayer(event.code);
+
+});
+
+const movePlayer = (direction) => {
+  playerPositionCoordinates = findPlayerPosition();
+  console.log("moveplayer", playerPositionCoordinates)
+  adjacentTileCoordinates = findAdjacentTileCoordinates(playerPositionCoordinates, direction);
+
+  switch(direction){
     case "ArrowUp":
     case "ArrowDown":
     case "ArrowLeft":
     case "ArrowRight":
   };
-});
-
-
-const determinePlayerPosition = () =>{
-  let playerElement = document.querySelector(".player");
-  let playerCol = Number(playerElement.classList[1].slice(-2,));
-  let playerRow = Number(playerElement.classList[2].slice(-2,));
-
-  playerPositionCoordinates = [playerCol, playerRow]
-}
-
-determinePlayerPosition();
+};
