@@ -7,6 +7,8 @@ const mainElement = document.querySelector("main");
 let bothCards = []   //compare both cards
 let firstOrSecondTurnedCard = 0
 let counter = 0
+let blockEvents = false
+
 
 const shuffleArray = (array) =>{
   let currentIndex = array.length, randomIndex;
@@ -26,6 +28,9 @@ const shuffleArray = (array) =>{
 };
 
 const clickHandler = (event) => {
+  if (blockEvents) {
+    return
+  }
   turnCard(event.currentTarget);
   event.currentTarget.removeEventListener("click", clickHandler);
 };
@@ -36,6 +41,7 @@ const addClickListener = (card) => {
 
 
 const compareCards = (bothCards) =>{
+  blockEvents = true
   let classOne = bothCards[0].classList.value
   let classTwo = bothCards[1].classList.value
 
@@ -59,10 +65,12 @@ const compareCards = (bothCards) =>{
     
   }else{ 
     bothCards.forEach(card =>{
-      setTimeout(()=>{card.setAttribute("src", "./img/standard.png");
-      addClickListener(card);
-    },800);
-      
+      setTimeout(()=>{
+        card.setAttribute("src", "./img/standard.png");
+        addClickListener(card);
+        blockEvents = false;
+      },800);
+    
     });
   };
 };
