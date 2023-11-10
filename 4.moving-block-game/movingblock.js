@@ -1,9 +1,11 @@
 gridSizes = [16,32,64,128]
 
 //global variables
+const body = document.querySelector("body");
 let header = document.querySelector("header");
 let main = document.querySelector("main");
-let playerPosition = []
+let playerPositionCoordinates = [];
+let playerPositionElement
 
 //skeleton elements
 let btnContainer = document.createElement("div");
@@ -66,16 +68,15 @@ FUNCTIONS for alternative grid sizes commented out inside this functions
 const playerStartPosition = (size) =>{
   let colPosition = Math.floor(Math.random() * (size))
   let rowPosition = Math.floor(Math.random() * (size))
-  playerPosition = [colPosition, rowPosition]
-  return playerPosition;
+  playerPositionCoordinates = [colPosition, rowPosition]
+  return playerPositionCoordinates;
 };
-
 
 drawGrid();
 
 function drawGrid(){
-  playerPosition = playerStartPosition(32);
-  console.log(playerPosition)
+  playerPositionCoordinates = playerStartPosition(32);
+  console.log(playerPositionCoordinates)
 
   for(let i = 0; i < 32; i++){
     let newRow = document.createElement("div");
@@ -83,26 +84,34 @@ function drawGrid(){
 
     for (let j = 0; j<32; j++){
       newTile = document.createElement("div");
-
-      if(i=== playerPosition[1] && j===playerPosition[0]){
-        newTile.setAttribute("class",`player col${j} row${i}`);
-        //newTile.setAttribute("style", "background-color: black")
-        
-      }else{
-        newTile.setAttribute("class", `cell col${j} row${i}`);
-      };
-0
-      // j === playerPosition[0] && i === playerPosition[1] 
-      //   ? newTile.setAttribute("class",`player col${j} row${i}`)           
-      //   : newTile.setAttribute("class", `cell col${j} row${i}`);
-
-      
+      newTile.setAttribute("class", i === playerPositionCoordinates[1] && j === playerPositionCoordinates[0] 
+        ? `player col${j} row${i}` 
+        : `cell col${j} row${i}`);   
       newRow.appendChild(newTile);
     };
   gridContainer.appendChild(newRow);
   };
+};
 
+body.addEventListener("keyup", (event) =>{
+  console.log(event.code)
+  
+  switch(event.code){
+
+    case "ArrowUp":
+    case "ArrowDown":
+    case "ArrowLeft":
+    case "ArrowRight":
+  };
+});
+
+
+const determinePlayerPosition = () =>{
+  let playerElement = document.querySelector(".player");
+  let playerCol = Number(playerElement.classList[1].slice(-2,));
+  let playerRow = Number(playerElement.classList[2].slice(-2,));
+
+  playerPositionCoordinates = [playerCol, playerRow]
 }
 
-
-
+determinePlayerPosition();
