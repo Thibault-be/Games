@@ -8,8 +8,14 @@
 }
 
 .cell{
+  box-sizing: border-box;
   border: 1px solid black;
   height: 15px;
   width: 15px;
+}
 
+.player{
+  background-color: blue;
+  height: 15px;
+  width: 15px;
 }
